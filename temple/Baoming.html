@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>{{.title}}</title>
+	<meta name="format-detection" content="telephone=no, address=no">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-touch-fullscreen" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<script src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+	{{ template "incude.html" . }}
+		<style>
+
+	 .tousu{
+	   position:fixed;
+	   background-color:rgba(102,102,102,0.7);
+	   width:34px;
+	   height:34px;
+	   font-size:14px;
+	   line-height:34px;
+	   text-align:center;
+	   color:#fff;
+	   right:17px;
+	    top:33px;
+       border-radius:18px;
+	   z-index:9999;
+	 }
+  </style>
+
+</head>
+<body>
+<div class="container container-fill">
+
+
+
+ <style>
+ .threebutton a{background-color:#6281FD;}
+ .divmain11 .divsub{background:#6281FD;}
+ .content .list_box li a.vote{background:#6281FD;}
+ .macol{background:#6281FD;}
+.footer li>a.on .nav{color:#6281FD}
+.footer li>a.on .nav p{color:#6281FD}
+.footer li>a.on .nav{color:#6281FD}
+.rankp{background:#6281FD;}
+.lapiao .l{background:#6281FD;}
+.lapiao .r{background:#6281FD;}
+.donate_bank_p .weui-btn_primary{background:#6281FD;color:#fff}
+.threebutton a:link{color:#fff}
+.threebutton a:visited{color:#fff}
+#mar{background-color:#666;}
+.content .list_box li>div .number{background-color:#6281FD;}
+.twobutton a.active{background-color:#6281FD}
+.twobutton a:nth-child(2).active{background-color:#6281FD}
+ </style>
+<!-- <div class="tousu"><p><a href="/jubao/jubao.html" style="color:#fff">投诉</a></p></div> -->
+<style>
+#rdlist{display:none;margin-left:-100%;position:fixed;left:0px;z-index:999999;padding:5px 5px 5px 2px;background:rgba(0,0,0,0.5);border-top-right-radius:20px;border-bottom-right-radius:20px;color:#fff;overflow:hidden;height:35px;line-height:35px;font-size:12px}
+#rdlist div{margin-top:-5px}
+#rdlist div img{width:30px;height:30px;border-radius:20px;margin-top:-2px}
+</style>
+<div id="rdlist">
+  <div ><img></img> <span></span></div>
+
+</div>
+
+<script>
+//每条弹幕发送间隔
+var imagetrue=false
+var looper_time=5*1000;
+//是否首次执行
+var run_once=true;
+do_barrager();
+
+function do_barrager() {
+    if (run_once) {
+        //如果是首次执行,则设置一个定时器,并且把首次执行置为false
+        looper = setInterval(do_barrager, looper_time);
+        run_once = false;
+    }
+    //获取
+
+    //是否有数据
+
+        //$('.swiper-container').barrager(data);
+$.getJSON("/wx/get_frist?uuid={{ .uuid }}",function(data){
+      //是否有数据
+      if(data.info){
+           //$('.swiper-container').barrager(data);
+
+		   $('#rdlist div img').attr('src',"/images/77a31255d070a53fa92102405bde4220.png");
+		   $('#rdlist div span').text(data.info);
+		   $("#rdlist").show();
+			 $("#rdlist").animate({marginLeft:"0px"},500,'swing',function(){
+				 setTimeout(function(){
+				 $("#rdlist").fadeOut(5000,function(){
+				   $("#rdlist").css('margin-left',"-100%");
+				 });
+
+				 },3000);
+			  });
+
+
+      }
+
+  });
+
+
+
+}
+
+</script>
+
+
+
+
+
+
+
+<div style="height:10px;"></div>
+<div class="fee_feedback_wrapper">
+<div class="divbaoming4">
+<div class="dlist1">
+选择上传1-5张照片，第一张为封面图。
+</div>
+<div class="dlist2"></div>
+
+
+  <div class="divbaoming4">
+            			<div class="dlist3" id="images"><img id="chooseImages" src="/images/jia.jpg" class="bmimg"></div>
+
+            </div>
+
+
+</div>
+
+<form id="formID">
+	<div>
+		<ul class="fd_list2">
+			<li>
+			<div class="tlt">姓名</div>
+			<div class="cont">
+				<input name="name"  type="text" placeholder="请输入姓名" class="tx"></div>
+			</li>
+
+			<li>
+			<div class="tlt">手机号码</div>
+			<div class="cont">
+				<input name="phone"  type="text" placeholder="请输入手机号码" class="tx"></div>
+			</li>
+				<li>
+
+			<div class="tlt">参赛宣言</div>
+			<div class="cont">
+				<textarea name="introduction" class="ta" cols="" placeholder="请输入参赛宣言"></textarea></div>
+			</li> 				</ul>
+		<div class="btn_area">
+<div class="baomingtxt" style="width:95%;line-height:18px;height:auto;text-align:left;text-indent:8px;"><p><font color="">请如实填写报名信息，提交信息为唯一获奖凭证</font></p></div>
+ <div class="baomingtxt"><font color=""></font></div>
+<div class="btn_bg_green">提交报名</div>
+<div class="baomingtxt"><font color=""></font></div>
+	</div>
+<input type="file" id="files" name="img" multiple="multiple" style="display:none" />
+	</div>
+	</form>
+</div>
+<div class="follow" id="follow" style="display:none">
+<div class="weui-mask"></div>
+<div id="guanzhubox" >
+	<div class="box1" onclick="hidemod('follow');">
+	<span class="span1">提示</span>
+	<span class="span2" >关闭</span></div>
+	<div class="divtxt">
+	<p>长按下方二维码，长按，识别二维码</p>
+	<p><img src="" width="80%" ></p>
+
+	</div>
+</div>
+</div>
+
+<script>
+
+$(document).ready(function () {
+
+     $("#files").change(files_oninpit)
+    $("#chooseImages").click(function () {
+
+        $("#files").click()
+    })
+})
+function files_oninpit() {
+         bmimg = $(".bmimg");
+        length = bmimg.length;
+        if (length>6){
+            dialog2("不能超过5张图片");
+            return
+        }
+        var fiels= $("#files").prop('files');
+
+        var formFile = new FormData();
+        if (fiels.length+length>5)
+		{
+		    dialog2("图片不能超过5张");
+		    return
+		}
+        for(var i=0;i<fiels.length;i++)
+        {
+
+            console.log(fiels[i].size);
+            if((fiels[i].size/1024/1024)>15)
+            {
+                dialog2("大小不能超过15M");
+                return
+            }
+            filepath=fiels[i].name;
+            var extStart=filepath.lastIndexOf(".");
+            var ext=filepath.substring(extStart,filepath.length).toUpperCase();
+            if(ext!=".BMP"&&ext!=".PNG"&&ext!=".GIF"&&ext!=".JPG"&&ext!=".JPEG")
+            {
+
+                dialog2("图片限于png,gif,jpeg,jpg格式");
+                return
+            }
+			var formFile = new FormData();
+            formFile.append("avatar",fiels[i])
+			$.ajax({
+				url:'/image/upload',
+				type: 'POST',
+				data:formFile,
+				processData: false,//用于对data参数进行序列化处理 这里必须false
+				contentType: false, //必须
+				success: function (arg)
+				{
+					if(arg.code==0)
+					{
+						var data=arg["data"];
+
+						$("#images").append("<img src='"+data+"' class='bmimg' />");
+
+
+
+
+					}
+				}
+
+			})
+
+		}
+
+
+
+		}
+
+
+
+
+
+	$(".btn_bg_green").click(function() {
+        var upimages = [];
+        var name = $("input[name='name']").val();
+        if (name == '') {
+            dialog2("请输入姓名");
+            return false;
+        }
+        if(name.length>30){
+			dialog2("名称过长");
+			return false;
+		}
+        var introduction = $("textarea[name='introduction']").val();
+        if (introduction == '') {
+            dialog2("参赛宣言不能为空！");
+            return false;
+        }
+        if(introduction.length>200)
+		{
+			dialog2("参赛宣言不能超过200字！");
+			return false;
+		}
+
+
+        var mobile = $("*[name='phone']").val();
+        if (mobile == "") {
+            dialog2("请输入手机");
+            return false;
+        }
+        if (mobile.length>20) {
+            dialog2("请输入正确的手机号码！");
+            return false;
+        }
+
+        var i = 0,
+            bmimg = $(".bmimg");
+        length = bmimg.length;
+        if (length < 2 || length > 6) {
+
+            var upimgtip = "请上传1-5张图片";
+            dialog2(upimgtip);
+            return false;//1-5张照片
+        }
+       var data={
+		        "objid":{{ .objid}},
+                "name": name,
+                "describe": introduction,
+                "phone": mobile,
+                "picturearr": upimages,
+	   			 "staus":"no"};
+		for(var i=1;i<6;i++)
+		{
+			data["image"+i.toString()]=""
+		}
+      	for(var i=1;i<length;i++)
+		{
+			data["image"+i.toString()]=$(bmimg[i]).attr("src")
+		}
+
+      	datajons=JSON.stringify(data)
+        $.ajax({
+            type: "POST",
+            url: "/wx/baoming",
+            data: datajons,
+            success: function (str) {
+                hidemod("loadingToast");
+
+                 if(str["code"]==0) {
+					 location.href = "/wx/vote/{{.objid}}/"+str.data
+				 }
+                 else{
+					 dialog2(rqdata["msg"])
+				 }
+                },
+            error: function (err) {
+                dialog2("发生错误，请刷新后重试！");
+            }
+        });
+
+
+    })
+
+
+
+
+
+
+
+</script>
+
+
+<script type="text/javascript">
+
+
+
+</script>
+
+
+	</div>
+	<!-- 提示弹窗start -->
+
+
+
+		<script>
+
+				wx.config({
+				debug: false,
+				appId: '{{.appId}}',
+				timestamp: '{{.timestamp}}',
+				nonceStr: '{{.noncestr}}',
+				signature: '{{.signature}}',
+				jsApiList: [
+					'checkJsApi',
+					'onMenuShareTimeline',
+					'onMenuShareAppMessage',
+					'onMenuShareQQ',
+					'onMenuShareWeibo',
+					'startRecord',
+					'stopRecord',
+					'onVoiceRecordEnd',
+					'playVoice',
+					'pauseVoice',
+					'stopVoice',
+					'onVoicePlayEnd',
+					'uploadVoice',
+					'downloadVoice',
+					'chooseImage',
+					'previewImage',
+					'uploadImage',
+					'downloadImage',
+					'translateVoice',
+					'getNetworkType',
+					'openLocation',
+					'getLocation',
+					'hideOptionMenu',
+					'showOptionMenu',
+					'hideMenuItems',
+					'showMenuItems',
+					'hideAllNonBaseMenuItem',
+					'showAllNonBaseMenuItem',
+					'closeWindow',
+					'scanQRCode',
+					'chooseWXPay',
+					'openProductSpecificView',
+					'addCard',
+					'chooseCard',
+					'openCard'
+				]
+			});
+
+
+			  var sharedata = {"title":'{{ .sharetitle }}',"imgUrl":"{{.shareimgV}}","desc":"{{.sharedesc}}","link":"{{ .url}}"};
+                sharedata.success = function(){
+			// var url = "./index.php?i=25&c=entry&ty=share&rid=3319&do=Count&m=tyzm_diamondvote";
+			// $.post(url, function(dat){});
+	};
+                if(sharedata.desc == ''){
+		var _share_content = _removeHTMLTag($('body').html());
+		if(typeof _share_content == 'string'){
+			sharedata.desc = _share_content.replace($_share['title'], '')
+		}
+	}
+			// 在这里调用 wxAPI
+			wx.ready(function () {
+
+				//显示右上角菜单
+                wx.showOptionMenu();
+                wx.onMenuShareAppMessage(sharedata);
+                wx.onMenuShareTimeline(sharedata);
+                wx.onMenuShareQQ(sharedata);
+                wx.onMenuShareWeibo(sharedata);
+
+
+			});
+
+
+		</script>
+
+
+<div id="dialog2" style="opacity: 1;display:none;">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__bd">返回错误！</div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:hidemod('dialog2');" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+            </div>
+        </div>
+</div>
+
+<div id="toast" style="opacity: 1; display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+            <p class="weui-toast__content" style="color:#fff">已完成</p>
+        </div>
+</div>
+<div id="loadingToast" style="opacity: 1; display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content" style="color:#fff">数据加载中</p>
+        </div>
+</div>
+<!-- 提示弹窗start -->
+
+	<script type="text/javascript">
+
+	function dialog2(msg){
+	    $("#dialog2 .weui-dialog__bd").html(msg);
+	    $("#dialog2").show();
+	}
+	function hidemod(boxid){
+	    $("#"+boxid).hide();
+	}
+	function loadingToast(msg){
+	    $("#loadingToast .weui-toast__content").html(msg);
+	    $("#loadingToast").show();
+	}
+	function toast(msg){
+	    $("#toast .weui-toast__content").html(msg);
+	    $("#toast").show();
+		setTimeout("hidemod('toast')",2000);
+	}
+
+	wx.ready(function () {
+		wx.hideMenuItems({
+		  menuList:["menuItem:copyUrl","menuItem:originPage", "menuItem:share:email","menuItem:openWithQQBrowser","menuItem:openWithSafari","menuItem:share:brand"],
+
+		});
+
+	});
+
+	</script>
+
+</body>
+</html>

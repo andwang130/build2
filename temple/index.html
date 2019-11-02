@@ -1,0 +1,574 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>{{.title}}</title>
+	<meta name="format-detection" content="telephone=no, address=no">
+	<meta name="apple-mobile-web-app-capable" content="yes" />  
+	<meta name="apple-touch-fullscreen" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<script src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+
+
+    {{ template "incude.html" . }}
+		<style>
+
+	 .tousu{
+	   position:fixed;
+	   background-color:rgba(102,102,102,0.7);
+	   width:34px;
+	   height:34px;
+	   font-size:14px;
+	   line-height:34px;
+	   text-align:center;
+	   color:#fff;
+	   right:17px;
+	    top:33px;
+       border-radius:18px;
+	   z-index:9999;
+	 }
+  </style>
+
+</head>
+<body>
+<div class="container container-fill">
+
+
+
+
+ <style>
+ .threebutton a{background-color:#6281FD;}
+ .divmain11 .divsub{background:#6281FD;}
+ .content .list_box li a.vote{background:#6281FD;}
+ .macol{background:#6281FD;}
+.footer li>a.on .nav{color:#6281FD}
+.footer li>a.on .nav p{color:#6281FD}
+.footer li>a.on .nav{color:#6281FD}
+.rankp{background:#6281FD;}
+.lapiao .l{background:#6281FD;}
+.lapiao .r{background:#6281FD;}
+.donate_bank_p .weui-btn_primary{background:#6281FD;color:#fff}
+.threebutton a:link{color:#fff}
+.threebutton a:visited{color:#fff}
+#mar{background-color:#666;}
+.content .list_box li>div .number{background-color:#6281FD;}
+.twobutton a.active{background-color:#6281FD}
+.twobutton a:nth-child(2).active{background-color:#6281FD}
+ </style>
+<!-- <div class="tousu"><p><a href="/jubao/jubao.html" style="color:#fff">投诉</a></p></div> -->
+<style>
+#rdlist{display:none;margin-left:-100%;position:fixed;left:0px;z-index:999999;padding:5px 5px 5px 2px;background:rgba(0,0,0,0.5);border-top-right-radius:20px;border-bottom-right-radius:20px;color:#fff;overflow:hidden;height:35px;line-height:35px;font-size:12px}
+#rdlist div{margin-top:-5px}
+#rdlist div img{width:30px;height:30px;border-radius:20px;margin-top:-2px}
+</style>
+<div id="rdlist">
+  <div ><img></img> <span></span></div>
+
+</div>
+<script>
+//每条弹幕发送间隔
+var imagetrue=false
+var looper_time=6000*1000;
+//是否首次执行
+var run_once=true;
+do_barrager();
+
+function do_barrager() {
+    if (run_once) {
+        //如果是首次执行,则设置一个定时器,并且把首次执行置为false
+        looper = setInterval(do_barrager, looper_time);
+        run_once = false;
+    }
+    //获取
+
+    //是否有数据
+
+        //$('.swiper-container').barrager(data);
+$.getJSON("/wx/get_frist?uuid={{ .uuid }}",function(data){
+      //是否有数据
+      if(data.info){
+           //$('.swiper-container').barrager(data);
+
+		   $('#rdlist div img').attr('src',"/images/77a31255d070a53fa92102405bde4220.png");
+		   $('#rdlist div span').text(data.info);
+		   $("#rdlist").show();
+			 $("#rdlist").animate({marginLeft:"0px"},500,'swing',function(){
+				 setTimeout(function(){
+				 $("#rdlist").fadeOut(5000,function(){
+				   $("#rdlist").css('margin-left',"-100%");
+				 });
+
+				 },3000);
+			  });
+
+
+      }
+
+  });
+
+
+
+}
+
+</script>
+
+
+<script type="text/javascript" src="/wxchat/jquery.masonry.min.js"></script>
+ 
+ 
+
+
+  <div class="swiper-container">
+      <a href="/wx/toushu">
+          <div style="z-index: 999;position:absolute;width: 50px;height:50px;margin-top: 30px;margin-left: 88%;border-radius: 50%;background-color: gray;text-align: center">
+          <div style="margin-top: 15px">
+              <font style="font-size: 15px;color:white;padding-top: 25px">投诉</font>
+          </div>
+          </div>
+      </a>
+    <div class="swiper-wrapper">
+        {{ range $index,$value:= .topimges}}
+            {{ if ne $value "" }}
+           <div class="swiper-slide" ><a href=""><img style="height: 340px" src="{{ $value}}"></a></div>
+            {{ end  }}
+        {{ end }}
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+
+  <script>
+   
+    $(function(){
+     
+	 var mySwiper = new Swiper('.swiper-container', {
+		autoplay:2000,//可选选项，自动滑动
+		speed:500,
+		pagination : '.swiper-pagination',
+		autoHeight:true
+
+	});
+
+   
+   
+   }); 
+
+
+  </script>
+
+  
+
+<div class="num_box">
+	<ul class="num_box_ul bg-purple2 bg-blue2">
+		<li><span class="text"><i class="iconfont icon-biezhen"></i> 参与选手</span> <span>{{.count}}</span></li>
+		<li><span class="text"> <i class="iconfont icon-dianzan"></i> 累计投票</span> <span>{{.votes}}</span></li>
+		<!-- <li><span class="text"><i class="glyphicon glyphicon-eye-open"></i> 分享量</span> <span id="sahrec">78</span></li> -->
+		<li><span class="text"><i class="iconfont icon-hot"></i> 访问量</span> <span>{{.volume}}</span></li>
+		
+	</ul>
+
+	<script type="text/javascript">
+var intDiff = parseInt({{.endtimes}});//倒计时总秒数量
+ intDiff*=10;
+function timer(intDiff){
+	window.setInterval(function(){
+	var day=0,
+		hour=0,
+		minute=0,
+		second=0;//时间默认值	
+		mini=0;
+	if(intDiff > 0){
+		day = Math.floor(intDiff / (60 * 600 * 24));
+		hour = Math.floor(intDiff / (60 * 600)) - (day * 24);
+		minute = Math.floor(intDiff / 600) - (day * 24 * 60) - (hour * 60);
+		second = Math.floor(intDiff) - (day * 24 * 60 * 600) - (hour * 60 * 600) - (minute * 600);
+		second/=10; 
+		second=second.toFixed(1);
+		 
+	}
+	if (minute <= 9) minute = '0' + minute;
+	
+	$('#day_show').html(day+"天");
+	$('#hour_show').html('<s id="h"></s>'+hour+'时');
+	$('#minute_show').html('<s></s>'+minute+'分');
+	$('#second_show').html('<s></s>'+second+'秒');
+	 
+	intDiff--;
+	}, 100);
+} 
+
+$(function(){
+	timer(intDiff);
+});	
+</script>
+    <div class="time-item5">
+        <i class="iconfont icon-daojishi"></i>
+        投票日期: {{.aptimestart}}到{{.aptimeend}} </div>
+    <div class="time-item5">
+        <i class="iconfont icon-daojishi"></i>
+        活动剩余: <span id="day_show">0天</span>
+        <span id="hour_show">0时</span>
+        <span id="minute_show">0分</span>
+        <span id="second_show">0秒</span>
+
+    </div>
+ 
+	
+<span>
+
+<div class="divmain11 clearfix bg-purple3 bg-blue3">
+  <input type="text" value="" name="sci" placeholder="请输入姓名" class="inputtxt">
+  <div class="divsub" onclick="get_list(1);" style="background-color: gold"><i class="glyphicon glyphicon-search"></i>&nbsp&nbsp搜索</div>
+</div>
+
+<div class="threebutton">
+ <a href="/wx/jp/{{ .objid}}" style="background-color: gold"><span>规则/奖品</span></a>
+ <a href="/wx/sort/{{ .objid}}" style="background-color: gold"><span>比赛排名</span></a>
+ 
+ <a href="javascript:" onclick="get_ap()"; style="background-color: gold"> <span>我要报名</span></a>
+ 
+
+</div>
+ 
+
+</span>
+
+</div>
+ <div class="twobutton"> 
+  <a href="javascript:;" class="active">
+	 人气选手 
+ </a>
+  <a href="javascript:;" data-order="new" >
+	 最新参与 
+ </a>
+ 
+ </div>
+ 
+ 
+<section class="content bg-purple3 bg-blue3 bg-bw" id="toupiao">
+<div id="pageCon" style="padding-bottom: 10px">
+<ul class="list_box clearfix" id="list_box" style="position: relative;">
+</ul>
+<div id="list_more" class="box cl-white" style="margin-top: 16px; text-align: center;margin-bottom: 40px;"><span class="am-text-secondary" onclick="get_list(0);">查看更多</span></div>
+</div>
+</section>
+
+<div style="clear:both;"></div>
+
+{{/*<div class="divmain10 pd-10 bg-purple4 bg-blue4">*/}}
+
+  {{/*<div class="tabtitle macol bg-purple4 bg-blue4"  >*/}}
+      {{/*<div class="bg-purple5 bg-blue5 cl-yellow" style="width:40%; border-radius:20px; height:36px; line-height:36px;margin:0 auto; text-align:center;">活动规则</div>*/}}
+   {{/*</div>*/}}
+  {{/*<div class="divcon">*/}}
+   	 {{/*{{   .customized   }}*/}}
+{{/*<div>*/}}
+	{{/*<br />*/}}
+{{/*</div>  */}}
+  {{/*</div>*/}}
+{{/*</div>*/}}
+
+
+
+<style>
+  #zanzhu2{background:url('/images/ts.png') no-repeat;background-size:19px 19px;background-position:0px 4px}
+  
+</style>
+
+<div style="height:50px;"></div>
+<div class="footer">
+
+<ul>
+
+
+    <li><a href="/wx/index/{{.objid}}"  class="on" ><i class='nav'><i class="iconfont icon-taikong-"></i><p>首页</p></i></a></li>
+    <li><a href="/wx/jp/{{.objid }}" ><div class='nav'><div class='is ispr iconfont icon-jiangpin'></div><p>奖品</p></div></a></li>
+    <li><a href="javascript:;"   onclick="get_ap();"><div class='nav'><div class='ib ispr iconfont icon-baoming'></div><p>报名</p></div></a></li>
+    <li><a href="/wx/sort/{{ .objid}}"  ><div class='nav'><div class='if ispr iconfont icon-bangdan'></div><p>榜单</p></div></a></li>
+
+    {{/*<li><a href="/wx/toushu"  ><div class='nav'><div class='is ispr' id="zanzhu2"></div><p>投诉</p></div></a></li>*/}}
+
+</ul>
+</div>
+<script type="text/javascript">
+    function get_ap() {
+        {{ if gt  .aptimes 0 }}
+        dialog2("未开始报名！")
+        return false;
+        {{ else if lt .endtimes 0 }}
+        dialog2("活动已经结束！")
+        return false;
+        {{  end}}
+        location.href = "/wx/baoming/{{ .objid}}";
+    }
+function Refresh() {
+    location.reload()
+}
+</script>
+
+
+
+<script type="text/javascript">
+var limit = 1;
+var order="titcks";
+function get_list(ty){
+    
+    if(ty==1){
+        limit=1
+	   var keyword=$("input[name='sci']").val();
+	   if(keyword==""){
+	      dialog2("请输入姓名");
+		  return false;
+	   }
+	   $("#pageCon .list_box").html('');
+	}else{
+	   $("#list_more").html('<div class="am-text-secondary"><span class="am-icon-spinner am-icon-spin"></span> 卖命加载中...</div>');
+	   var keyword="";
+	}
+
+    var clear_data = JSON.stringify({
+        page:limit,
+        sort:order,
+        search:keyword,
+        staus:"yes",
+        "objid":{{.objid}}
+    });//把对象转换成json
+	$.ajax({
+	    type : "post",
+	    url : "/user/list",
+	    data : clear_data,
+        dataType : "json",		
+	    success : function(data) {
+	    	if(data.code==0){
+						var list = data.data.List;
+						var content = '';
+						console.log(list)
+						for(var i=0; i<list.length; i++){
+							content += '<li class="picCon" style="'+list[i]['effect']+'"><div>'
+							+'<i class="number">'+list[i]['Mindex']+'号</i>'
+							+'<a href="/wx/vote/{{.objid}}/'+list[i]['ID']+'" class="img"><img src="'+list[i]['Image1']+'"></a>'
+							+'<div class="clearfix"><p style="overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">'+list[i]['Name']+'</p><p style="text-align:left;margin-top:10px"><a href="/wx/vote/{{.objid}}/'+list[i]['ID']+'"class="vote" style="display:inline-block;width:84px;border:1px solid #585656;color:#585656;background:#fff;">投票</a><span style="color:red;font-size:16px;float:right;margin-right:5px">'+list[i]['Titcks']+'票</span></p></div>'
+							+'</div></li>';
+							
+						}
+                        $("#pageCon .list_box").append(content);
+						if(list.length==10){
+							$("#list_more").html('<span class="am-text-secondary" onclick="get_list(0);">查看更多</span>');
+						}else{
+							$("#list_more").html('<span></span>');
+						}		
+	                    limit++;
+
+						
+
+ 
+		    }else if(data.status==-1){
+	    		$("#list_more").html('<span>没有更多记录！</span>');
+	    	}else if(data.status==-2){
+	    		$("#list_more").html('<span>没有搜索到内容！</span>');
+	    	}else{
+			    $("#list_more").html('<span>没有更多记录！</span>');
+			}    	
+	    },
+	    error : function(xhr, type) {
+
+	    }
+	});
+	    
+
+}
+get_list(0);
+
+$(".twobutton a").click(function(){
+  
+  $(".twobutton a").removeClass('active');
+  $(this).addClass('active');
+  if($(this).data('order')=="new"){
+	order="created_at";
+  }else{
+  order="titcks";
+  } 
+  $("#pageCon .list_box").empty();
+	limit=1;
+	 
+	get_list(0);
+	
+	
+});
+//SetEffect();
+ var t=0;
+ var a=1;
+function SetEffect() { 
+           
+             setInterval(function(){
+			   if(a){t=4;}else{t=12;}
+			   $('.picCon').css('border-image-width',t+'px');
+			   
+			   a=!a;
+			 },300);
+               
+            }
+ 
+
+
+    
+</script>
+
+<script type="text/javascript">
+
+function share_success(){
+ 
+
+ // var t=$("#sahrec").text();
+// $("#sahrec").text(parseInt(t)+1);
+}
+ 
+</script>
+
+
+		
+	</div>
+	<!-- 提示弹窗start -->
+
+
+
+		<script>
+
+
+
+			//微信API验证
+			wx.config({
+				debug: false,
+				appId: '{{.appId}}',
+				timestamp: '{{.timestamp}}',
+				nonceStr: '{{.noncestr}}',
+				signature: '{{.signature}}',
+				jsApiList: [
+					'checkJsApi',
+					'onMenuShareTimeline',
+					'onMenuShareAppMessage',
+					'onMenuShareQQ',
+					'onMenuShareWeibo',
+					'startRecord',
+					'stopRecord',
+					'onVoiceRecordEnd',
+					'playVoice',
+					'pauseVoice',
+					'stopVoice',
+					'onVoicePlayEnd',
+					'uploadVoice',
+					'downloadVoice',
+					'chooseImage',
+					'previewImage',
+					'uploadImage',
+					'downloadImage',
+					'translateVoice',
+					'getNetworkType',
+					'openLocation',
+					'getLocation',
+					'hideOptionMenu',
+					'showOptionMenu',
+					'hideMenuItems',
+					'showMenuItems',
+					'hideAllNonBaseMenuItem',
+					'showAllNonBaseMenuItem',
+					'closeWindow',
+					'scanQRCode',
+					'chooseWXPay',
+					'openProductSpecificView',
+					'addCard',
+					'chooseCard',
+					'openCard'
+				]
+			});
+
+
+			  var sharedata = {"title":"{{ .sharetitle }}","imgUrl":"{{.shareimgV}}","desc":"{{.sharedesc}}","link":"{{ .url }}"};
+                sharedata.success = function(){
+			// var url = "./index.php?i=25&c=entry&ty=share&rid=3319&do=Count&m=tyzm_diamondvote";
+			// $.post(url, function(dat){});
+	};
+                if(sharedata.desc == ''){
+		var _share_content = _removeHTMLTag($('body').html());
+		if(typeof _share_content == 'string'){
+			sharedata.desc = _share_content.replace($_share['title'], '')
+		}
+	}       wx.error(function(res){
+	            console.log(res)
+                alert(JSON.stringify(res))
+            });
+
+			// 在这里调用 wxAPI
+			wx.ready(function () {
+
+				//显示右上角菜单
+                wx.showOptionMenu();
+                wx.onMenuShareAppMessage(sharedata);
+                wx.onMenuShareTimeline(sharedata);
+                wx.onMenuShareQQ(sharedata);
+                wx.onMenuShareWeibo(sharedata);
+
+				
+			});
+			
+			 
+		</script>
+		
+
+<div id="dialog2" style="opacity: 1;display:none;">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__bd">返回错误！</div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:hidemod('dialog2');" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+            </div>
+        </div>
+</div> 
+
+<div id="toast" style="opacity: 1; display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+            <p class="weui-toast__content" style="color:#fff">已完成</p>
+        </div>
+</div>
+<div id="loadingToast" style="opacity: 1; display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content" style="color:#fff">数据加载中</p>
+        </div>
+</div>
+<!-- 提示弹窗start -->
+
+	<script type="text/javascript">
+
+	function dialog2(msg){
+	    $("#dialog2 .weui-dialog__bd").html(msg);
+	    $("#dialog2").show();
+	}
+	function hidemod(boxid){
+	    $("#"+boxid).hide();
+	}
+	function loadingToast(msg){
+	    $("#loadingToast .weui-toast__content").html(msg);
+	    $("#loadingToast").show();
+	}
+	function toast(msg){
+	    $("#toast .weui-toast__content").html(msg);
+	    $("#toast").show();
+		setTimeout("hidemod('toast')",2000); 
+	}
+
+	wx.ready(function () {
+		wx.hideMenuItems({
+		  menuList:["menuItem:copyUrl","menuItem:originPage", "menuItem:share:email","menuItem:openWithQQBrowser","menuItem:openWithSafari","menuItem:share:brand"],
+
+		});
+
+	});
+
+	</script>
+	
+</body>
+</html>
